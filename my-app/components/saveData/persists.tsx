@@ -1,6 +1,6 @@
 //funcao para controlar a persistencia de algum component ou elemento entre páginas
 import React from "react";
-import SideBar from "./mainPage/sideBar";
+import SideBar from "../personal/mainPage/sideBar";
 
 interface LayoutProps {
   children: React.ReactNode;

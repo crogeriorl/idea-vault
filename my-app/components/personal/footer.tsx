@@ -7,7 +7,7 @@ export default function Footer() {
         Dê uma Olhada no projeto:
       </h1>
       <Image
-        src="/images/download.png"
+        src="/images/QRCODE.png"
         alt=""
         width={200}
         height={200}
