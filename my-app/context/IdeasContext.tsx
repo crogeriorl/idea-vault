@@ -43,7 +43,10 @@ export const IdeasProvider = ({ children }: { children: ReactNode }) => {
     undefined
   );
 
-  const [ideaArray, setIdeaArray] = useLocalStorage<Idea[]>("ideas", []);
+  const [ideaArray, setIdeaArray] = useLocalStorage<Idea[]>("ideas", []) as [
+    Idea[],
+    React.Dispatch<React.SetStateAction<Idea[]>>
+  ];
 
   return (
     <ideasContext.Provider
