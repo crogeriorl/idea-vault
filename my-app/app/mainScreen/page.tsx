@@ -5,7 +5,6 @@ import { Lightbulb } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useUser } from "@/context/UserContext";
 import Modal from "@/components/personal/mainPage/modal";
-import ModeToggle from "@/components/personal/theme/toggleButton";
 
 import { useState } from "react";
 import Header from "@/components/personal/header";
@@ -29,14 +28,13 @@ export default function Home() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.9 }}
-      className=" min-h-screen flex flex-col items-center  bg-white"
+      className=" min-h-screen flex flex-col items-center  bg-white
+      "
     >
       <div className="w-full">
         <Header /> <SideBar />
       </div>
-      <div className="absolute top-[110px] right-3">
-        <ModeToggle />
-      </div>
+
       <div className="flex gap-1 mt-10 mb-5">
         <h1 className="text-purple-700 text-4xl font-semibold lg:text-5xl">
           Idea Vault

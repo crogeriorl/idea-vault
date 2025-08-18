@@ -75,7 +75,7 @@ export default function SideBar() {
 
             <Button
               type="submit"
-              className="w-1/3 bg-purple-600 text-whtie"
+              className="w-1/3 bg-purple-600 text-white"
               onClick={() => {
                 setIsClicked(true);
                 setNickNameInput(nickName);

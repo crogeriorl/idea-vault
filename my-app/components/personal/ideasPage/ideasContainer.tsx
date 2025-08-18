@@ -14,6 +14,7 @@ import { useState, useEffect, useRef } from "react";
 import StatusInBox from "./statusInBox";
 import { useToast } from "@/context/toastContext";
 import { motion, AnimatePresence } from "framer-motion";
+import { AlertDialogDemo } from "../mainPage/alert";
 
 export default function IdeasContainer() {
   const { ideaArray, setIdeaArray } = useIdeas();
@@ -128,12 +129,7 @@ export default function IdeasContainer() {
                         >
                           Ver mais
                         </button>
-                        <button
-                          className="ml-4"
-                          onClick={() => RemoveIdeaBox(index)}
-                        >
-                          <Trash2 />
-                        </button>
+                        <AlertDialogDemo click={() => RemoveIdeaBox(index)} />
                       </div>
                     </div>
                   </CardHeader>

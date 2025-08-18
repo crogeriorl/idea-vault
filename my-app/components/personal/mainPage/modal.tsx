@@ -125,7 +125,7 @@ export default function Modal({ click }: ModalProps) {
           </span>{" "}
           <br />
           <Button
-            className="bg-purple-600 text-white my-6 hover:text-purple-600"
+            className="bg-purple-600 text-white my-6"
             onClick={CreateIdeaBox}
           >
             Salvar
