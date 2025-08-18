@@ -42,7 +42,7 @@ export function CarouselDemo() {
                     width={150}
                     height={150}
                     alt=""
-                    className="lg:w-[300px] mx-auto"
+                    className=" mx-auto"
                   />
                 ) : null}
                 {index === 1 ? (
@@ -51,7 +51,7 @@ export function CarouselDemo() {
                     width={150}
                     height={150}
                     alt=""
-                    className="lg:w-[300px] mx-auto"
+                    className=" mx-auto"
                   />
                 ) : null}
                 {index === 2 ? (
@@ -60,7 +60,7 @@ export function CarouselDemo() {
                     width={159}
                     height={150}
                     alt=""
-                    className="lg:w-[300px] mx-auto"
+                    className=" mx-auto"
                   />
                 ) : null}
                 <CardContent className="flex aspect-square items-center justify-center p-6 ">

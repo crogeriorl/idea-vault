@@ -102,12 +102,6 @@ export default function SideBar() {
             ser uma contribuição para o mundo!
           </p>{" "}
         </SheetFooter>
-        <Image
-          src="/undraw_solution-mindset_pit7.svg"
-          alt=""
-          width={300}
-          height={300}
-        />
       </SheetContent>
     </Sheet>
   );

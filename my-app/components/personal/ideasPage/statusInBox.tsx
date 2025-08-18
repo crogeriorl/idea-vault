@@ -46,21 +46,21 @@ export default function StatusInBox({ click, ideaIndex }: ModalProps) {
           <div className="flex items-center gap-1 text-zinc-400">
             <RadioGroupItem
               value="Pendente"
-              className=" data-[state=checked]:border-purple-700 border-2"
+              className=" data-[state=checked]: bg-purple-600"
             />
             <Label className="text-sm">Pendente</Label>
           </div>
           <div className="flex items-center gap-1 text-zinc-400">
             <RadioGroupItem
               value="Em Desenvolvimento"
-              className=" data-[state=checked]:border-purple-700 border-2"
+              className=" data-[state=checked]: bg-purple-600"
             />
             <Label className="text-sm">Em Dev</Label>
           </div>
           <div className="flex gap-1 items-center text-zinc-400">
             <RadioGroupItem
               value="No Cofre"
-              className=" data-[state=checked]:border-purple-700 border-2"
+              className=" data-[state=checked]: bg-purple-600"
             />
             <Label className="text-sm">No Cofre</Label>
           </div>

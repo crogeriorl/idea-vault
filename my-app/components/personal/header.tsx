@@ -14,7 +14,7 @@ export default function Header() {
 
       {pathname === "/mainScreen" ? (
         <Link href="/ideas">
-          <Button className="bg-purple-600 text-white mr-10 mt-4">
+          <Button className="bg-purple-700 text-white mr-10 mt-4">
             Minhas ideias
           </Button>
         </Link>
