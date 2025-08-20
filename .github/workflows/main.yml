@@ -28,7 +28,7 @@ jobs:
         uses: actions/checkout@v4
       - name: 'Make site code package'
         run: |
-          cd ./Idea-Vault/my-app
+          cd ./my-app
           zip -r app.zip . -x .git/** .github/**
       - name: 'Deploy container to server'
         run: |
