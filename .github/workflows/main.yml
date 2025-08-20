@@ -18,7 +18,7 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.OCI_WEB1_SSH_KEY }}
         run: |
           mkdir -p ~/.ssh
-          echo "$SSH_PRIVATE_KEY" | base64 --decode > ~/.ssh/id_rsa
+          echo -e "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
       - name: Adicionar chave ao agente SSH
         run: |
