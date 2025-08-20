@@ -1,0 +1,37 @@
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Decodificar chave privada
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.OCI_WEB1_SSH_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" | base64 --decode > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+      - name: Adicionar chave ao agente SSH
+        run: |
+          eval "$(ssh-agent -s)"
+          ssh-add ~/.ssh/id_rsa
+      - name: 'Get latest source code'
+        uses: actions/checkout@v3
+      - name: 'Make site code package'
+        run: |
+          cd Idea-Vault/my-app
+          zip -r app.zip . -x .git/** .github/**
+      - name: 'Deploy container to server'
+        run: |
+          ssh -i ./id_rsa -o StrictHostKeyChecking=no opc@${{ variables.OCI_WEB1_PUB_IP }} "sudo su"
+          scp -o StrictHostKeyChecking=no -v -i ./id_rsa -P 22 app.zip \
+            opc@${{ variables.OCI_WEB1_PUB_IP }}:${{ variables.APPSRV_DIR }}
+          # use "scp ... -r <directory> to recursive copy
+          ssh -i ./id_rsa -o StrictHostKeyChecking=no opc@${{ variables.OCI_WEB1_PUB_IP }} \
+            "unzip -o ${{ variables.APPSRV_DIR }}/app.zip -d ${{ variables.APPSRV_DIR }}"
+          ssh -i ./id_rsa -o StrictHostKeyChecking=no opc@${{ variables.OCI_WEB1_PUB_IP }} \
+            "rm -rf ${{ variables.APPSRV_DIR }}/*.zip"
+          ssh -i ./id_rsa -o StrictHostKeyChecking=no opc@${{ variables.OCI_WEB1_PUB_IP }} \
+            "rm -rf ${{ variables.APPSRV_DIR }}/*.zip"
+          ssh -i ./id_rsa -o StrictHostKeyChecking=no opc@${{ variables.OCI_WEB1_PUB_IP }} \
+            "bash -s" < ${{ variables.APPSRV_DIR }}/build_run.sh
+          ssh -i ./id_rsa -o StrictHostKeyChecking=no opc@${{ variables.OCI_WEB1_PUB_IP }} \
+            "rm -rf ~/.ssh/id_rsa"
