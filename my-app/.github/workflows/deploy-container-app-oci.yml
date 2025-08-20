@@ -1,3 +1,14 @@
+name: Containerized application CI workflow
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+  workflow_dispatch: # Allows manual triggering
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -14,7 +25,7 @@ jobs:
           eval "$(ssh-agent -s)"
           ssh-add ~/.ssh/id_rsa
       - name: 'Get latest source code'
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: 'Make site code package'
         run: |
           cd Idea-Vault/my-app
