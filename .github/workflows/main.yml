@@ -29,20 +29,20 @@ jobs:
       - name: 'Make site code package'
         run: |
           cd ./my-app
-          zip -r app.zip . -x .git/** .github/**
+          zip -r code.zip . -x .git/** .github/** .git*
       - name: 'Deploy container to server'
         run: |
-          ssh -i ./id_rsa -o StrictHostKeyChecking=no opc@${{ vars.OCI_WEB1_PUB_IP }} "sudo su"
-          scp -o StrictHostKeyChecking=no -v -i ./id_rsa -P 22 app.zip \
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no opc@${{ vars.OCI_WEB1_PUB_IP }} "sudo su"
+          scp -o StrictHostKeyChecking=no -v -i ~/.ssh/id_rsa -P 22 code.zip \
             opc@${{ vars.OCI_WEB1_PUB_IP }}:${{ vars.APPSRV_DIR }}
           # use "scp ... -r <directory> to recursive copy
-          ssh -i ./id_rsa -o StrictHostKeyChecking=no opc@${{ vars.OCI_WEB1_PUB_IP }} \
-            "unzip -o ${{ vars.APPSRV_DIR }}/app.zip -d ${{ vars.APPSRV_DIR }}"
-          ssh -i ./id_rsa -o StrictHostKeyChecking=no opc@${{ vars.OCI_WEB1_PUB_IP }} \
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no opc@${{ vars.OCI_WEB1_PUB_IP }} \
+            "unzip -o ${{ vars.APPSRV_DIR }}/code.zip -d ${{ vars.APPSRV_DIR }}"
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no opc@${{ vars.OCI_WEB1_PUB_IP }} \
             "rm -rf ${{ vars.APPSRV_DIR }}/*.zip"
-          ssh -i ./id_rsa -o StrictHostKeyChecking=no opc@${{ vars.OCI_WEB1_PUB_IP }} \
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no opc@${{ vars.OCI_WEB1_PUB_IP }} \
             "rm -rf ${{ vars.APPSRV_DIR }}/*.zip"
-          ssh -i ./id_rsa -o StrictHostKeyChecking=no opc@${{ vars.OCI_WEB1_PUB_IP }} \
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no opc@${{ vars.OCI_WEB1_PUB_IP }} \
             "bash -s" < ${{ vars.APPSRV_DIR }}/build_run.sh
-          ssh -i ./id_rsa -o StrictHostKeyChecking=no opc@${{ vars.OCI_WEB1_PUB_IP }} \
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no opc@${{ vars.OCI_WEB1_PUB_IP }} \
             "rm -rf ~/.ssh/id_rsa"
