@@ -28,21 +28,21 @@ jobs:
         uses: actions/checkout@v4
       - name: 'Make site code package'
         run: |
-          cd Idea-Vault/my-app
+          cd ./Idea-Vault/my-app
           zip -r app.zip . -x .git/** .github/**
       - name: 'Deploy container to server'
         run: |
-          ssh -i ./id_rsa -o StrictHostKeyChecking=no opc@${{ variables.OCI_WEB1_PUB_IP }} "sudo su"
+          ssh -i ./id_rsa -o StrictHostKeyChecking=no opc@${{ vars.OCI_WEB1_PUB_IP }} "sudo su"
           scp -o StrictHostKeyChecking=no -v -i ./id_rsa -P 22 app.zip \
-            opc@${{ variables.OCI_WEB1_PUB_IP }}:${{ variables.APPSRV_DIR }}
+            opc@${{ vars.OCI_WEB1_PUB_IP }}:${{ vars.APPSRV_DIR }}
           # use "scp ... -r <directory> to recursive copy
-          ssh -i ./id_rsa -o StrictHostKeyChecking=no opc@${{ variables.OCI_WEB1_PUB_IP }} \
-            "unzip -o ${{ variables.APPSRV_DIR }}/app.zip -d ${{ variables.APPSRV_DIR }}"
-          ssh -i ./id_rsa -o StrictHostKeyChecking=no opc@${{ variables.OCI_WEB1_PUB_IP }} \
-            "rm -rf ${{ variables.APPSRV_DIR }}/*.zip"
-          ssh -i ./id_rsa -o StrictHostKeyChecking=no opc@${{ variables.OCI_WEB1_PUB_IP }} \
-            "rm -rf ${{ variables.APPSRV_DIR }}/*.zip"
-          ssh -i ./id_rsa -o StrictHostKeyChecking=no opc@${{ variables.OCI_WEB1_PUB_IP }} \
-            "bash -s" < ${{ variables.APPSRV_DIR }}/build_run.sh
-          ssh -i ./id_rsa -o StrictHostKeyChecking=no opc@${{ variables.OCI_WEB1_PUB_IP }} \
+          ssh -i ./id_rsa -o StrictHostKeyChecking=no opc@${{ vars.OCI_WEB1_PUB_IP }} \
+            "unzip -o ${{ vars.APPSRV_DIR }}/app.zip -d ${{ vars.APPSRV_DIR }}"
+          ssh -i ./id_rsa -o StrictHostKeyChecking=no opc@${{ vars.OCI_WEB1_PUB_IP }} \
+            "rm -rf ${{ vars.APPSRV_DIR }}/*.zip"
+          ssh -i ./id_rsa -o StrictHostKeyChecking=no opc@${{ vars.OCI_WEB1_PUB_IP }} \
+            "rm -rf ${{ vars.APPSRV_DIR }}/*.zip"
+          ssh -i ./id_rsa -o StrictHostKeyChecking=no opc@${{ vars.OCI_WEB1_PUB_IP }} \
+            "bash -s" < ${{ vars.APPSRV_DIR }}/build_run.sh
+          ssh -i ./id_rsa -o StrictHostKeyChecking=no opc@${{ vars.OCI_WEB1_PUB_IP }} \
             "rm -rf ~/.ssh/id_rsa"
