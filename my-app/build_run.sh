@@ -8,7 +8,7 @@ docker container stop $_ctr
 docker container rm $_ctr
 
 echo ## Bulding image...
-docker build -t my-app:v1 .
+docker build -t my-app:$1 .
 
 echo ### Run app on docker!
-docker run -d -p 8080:3000 my-app:v1
+docker run -d -p 8080:3000 my-app:$1
