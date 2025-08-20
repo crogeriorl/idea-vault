@@ -38,7 +38,7 @@ jobs:
           IMAGE_TAG: $(echo ${{ github.sha }} | cut -c1-7)
         uses: docker/build-push-action@v5
         with:
-          context: . # Path to your Dockerfile and build context
+          context: ./my-app/ # Path to your Dockerfile and build context
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
