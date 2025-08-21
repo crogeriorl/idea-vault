@@ -77,7 +77,7 @@ jobs:
       #     zip -r ~/code.zip . -x .git/** .github/** .git*
       - name: 'Deploy container to server'
         env:
-          APP_IMAGE: ghcr.io/${{ github.repository }}:${{ steps.short_sha_action.outputs.sha }}
+          APP_IMAGE: ghcr.io/${{ github.repository }}:latest
         run: |
           scp -o StrictHostKeyChecking=no -v -i ~/.ssh/id_rsa -P 22 ./my-app/deploy_run_docker.sh \
             opc@${{ vars.OCI_WEB1_PUB_IP }}:${{ vars.APPSRV_DIR }}    # use "scp ... -r <directory> to recursive copy
