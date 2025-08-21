@@ -48,7 +48,8 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         env:
-          APP_IMAGE: ghcr.io/${{ github.repository }}:test    #tag- ${{ steps.short_sha_action.outputs.sha }}
+          APP_IMAGE: ghcr.io/${{ github.repository }}:test
+            # old tag: ${{ steps.short_sha_action.outputs.sha }}
         with:
           context: ./my-app/ # Path to your Dockerfile and build context
           push: true
