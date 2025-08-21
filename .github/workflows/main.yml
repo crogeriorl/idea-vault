@@ -54,7 +54,8 @@ jobs:
           context: ./my-app/ # Path to your Dockerfile and build context
           push: true
           tags: |
-            ${{ env.APP_IMAGE }}    # ${{ steps.meta.outputs.tags }}
+            ${{ env.APP_IMAGE }}
+            ${{ steps.meta.outputs.tags }}
             ghcr.io/${{ github.repository }}:latest
           labels: ${{ steps.meta.outputs.labels }}
 
