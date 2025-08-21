@@ -11,4 +11,4 @@ echo ">> Pulling app image..."
 docker pull $2
 
 echo ## Run app on docker!
-docker run -d -p 8080:3000 $2
+docker run -d -p 8080:3000 --restart always $2
