@@ -22,9 +22,15 @@ jobs:
       contents: read
       packages: write  # Grant write permission for packages (GHCR)
     env:
-      APP_IMAGE: ghcr.io/${{ github.repository }}:$(echo ${{ github.sha }} | cut -c1-7)
+      APP_IMAGE: ghcr.io/${{ github.repository }}:${{ steps.short_sha_action.outputs.sha }}
 
     steps:
+      - name: Get Short SHA
+        uses: benjlevesque/short-sha@v3.0
+        id: short_sha_action
+        with:
+          length: 7    # Optional: specify desired length
+
       - name: Checkout code repository
         uses: actions/checkout@v4
 
