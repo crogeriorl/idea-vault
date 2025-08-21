@@ -48,11 +48,13 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         env:
-          APP_IMAGE: ghcr.io/${{ github.repository }}:${{ steps.short_sha_action.outputs.sha }}
+          APP_IMAGE: ghcr.io/${{ github.repository }}:test    #tag- ${{ steps.short_sha_action.outputs.sha }}
         with:
           context: ./my-app/ # Path to your Dockerfile and build context
           push: true
-          tags: ${{ env.APP_IMAGE }}    # ${{ steps.meta.outputs.tags }}
+          tags: |
+            ${{ env.APP_IMAGE }}    # ${{ steps.meta.outputs.tags }}
+            ghcr.io/${{ github.repository }}:latest
           labels: ${{ steps.meta.outputs.labels }}
 
       - name: Deploying.. Decodificar chave privada
