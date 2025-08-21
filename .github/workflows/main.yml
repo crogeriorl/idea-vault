@@ -43,6 +43,9 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
+  deploy:
+      runs-on: ubuntu-latest
+
       - name: Decodificar chave privada
         env:
           SSH_PRIVATE_KEY: ${{ secrets.OCI_WEB1_SSH_KEY }}
