@@ -4,9 +4,15 @@ on:
   push:
     branches:
       - master
+      - main
+      - release
+      - develop
   pull_request:
     branches:
       - master
+      - main
+      - release
+      - develop
   workflow_dispatch: # Allows manual triggering
 
 jobs:
@@ -14,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: write # Grant write permission for packages (GHCR)
+      packages: write  # Grant write permission for packages (GHCR)
 
     steps:
       - name: Checkout code repository
@@ -31,16 +37,16 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/${{ github.repository }} # Image name format for GHCR
+          images: ghcr.io/${{ github.repository }}  # Image name format for GHCR
 
       - name: Build and push Docker image
         env:
-          IMAGE_TAG: $(echo ${{ github.sha }} | cut -c1-7)
+          IMAGE_NAME: ghcr.io/${{ github.repository }}:$(echo ${{ github.sha }} | cut -c1-7)
         uses: docker/build-push-action@v5
         with:
           context: ./my-app/ # Path to your Dockerfile and build context
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: $IMAGE_NAME    # ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
       - name: Deploying.. Decodificar chave privada
@@ -62,13 +68,14 @@ jobs:
       #     zip -r ~/code.zip . -x .git/** .github/** .git*
       - name: 'Deploy container to server'
         run: |
-          scp -o StrictHostKeyChecking=no -v -i ~/.ssh/id_rsa -P 22 ./my-app/build_run.sh \
+          scp -o StrictHostKeyChecking=no -v -i ~/.ssh/id_rsa -P 22 ./my-app/deploy_run_docker.sh \
             opc@${{ vars.OCI_WEB1_PUB_IP }}:${{ vars.APPSRV_DIR }}    # use "scp ... -r <directory> to recursive copy
           # ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no opc@${{ vars.OCI_WEB1_PUB_IP }} \
           #   "unzip -o ${{ vars.APPSRV_DIR }}/code.zip -d ${{ vars.APPSRV_DIR }}"
           # ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no opc@${{ vars.OCI_WEB1_PUB_IP }} \
           #   "rm -rf ${{ vars.APPSRV_DIR }}/*.zip"
-          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no opc@${{ vars.OCI_WEB1_PUB_IP }} \
-            "cd ${{ vars.APPSRV_DIR }}; chmod +x ./build_run.sh; sudo ./build_run.sh ${{ secrets.GHCR_TOKEN }} ${{ steps.meta.outputs.tags }}"
-          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no opc@${{ vars.OCI_WEB1_PUB_IP }} \
-            "rm -rf ~/.ssh/id_rsa"
+#          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no opc@${{ vars.OCI_WEB1_PUB_IP }} \
+#            "cd ${{ vars.APPSRV_DIR }}; chmod +x ./deploy_run_docker.sh; \
+              sudo ./deploy_run_docker.sh ${{ secrets.GHCR_TOKEN }} $IMAGE_NAME"
+#          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no opc@${{ vars.OCI_WEB1_PUB_IP }} \
+#            "rm -rf ~/.ssh/id_rsa"
