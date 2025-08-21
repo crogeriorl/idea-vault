@@ -10,7 +10,7 @@ on:
   workflow_dispatch: # Allows manual triggering
 
 jobs:
-  build:
+  build-deploy:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -43,10 +43,7 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-  deploy:
-      runs-on: ubuntu-latest
-
-      - name: Decodificar chave privada
+      - name: Deploying.. Decodificar chave privada
         env:
           SSH_PRIVATE_KEY: ${{ secrets.OCI_WEB1_SSH_KEY }}
           IMAGE_TAG: $(echo ${{ github.sha }} | cut -c1-7)
