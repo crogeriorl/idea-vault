@@ -86,7 +86,6 @@ jobs:
           # ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no opc@${{ vars.OCI_WEB1_PUB_IP }} \
           #   "rm -rf ${{ vars.APPSRV_DIR }}/*.zip"
          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no opc@${{ vars.OCI_WEB1_PUB_IP }} \
-            "cd ${{ vars.APPSRV_DIR }}; chmod +x ./deploy_run_docker.sh; \
-               sudo ./deploy_run_docker.sh ${{ secrets.GHCR_TOKEN }} ${{ env.APP_IMAGE }}"
+            "cd ${{ vars.APPSRV_DIR }}; chmod +x ./deploy_run_docker.sh; sudo ./deploy_run_docker.sh ${{ secrets.GHCR_TOKEN }} ${{ env.APP_IMAGE }}"
          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no opc@${{ vars.OCI_WEB1_PUB_IP }} \
            "rm -rf ~/.ssh/id_rsa"
