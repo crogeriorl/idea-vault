@@ -41,7 +41,7 @@ jobs:
 
       - name: Build and push Docker image
         env:
-          IMAGE_NAME: ghcr.io/${{ github.repository }}:$(echo ${{ github.sha }} | cut -c1-7)
+          IMAGE_NAME: "ghcr.io/${{ github.repository }}:$(echo ${{ github.sha }} | cut -c1-7)"
         uses: docker/build-push-action@v5
         with:
           context: ./my-app/ # Path to your Dockerfile and build context
