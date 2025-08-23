@@ -74,7 +74,7 @@ jobs:
       # - name: 'Make site code package'
       #   run: |
       #     cd ./my-app
-      #     zip -r ~/code.zip . -x .git/** .github/** .git*
+      #     zip -r ~/code.zip . -x ".git*"
       - name: 'Deploy container to server'
         env:
           APP_IMAGE: ghcr.io/${{ github.repository }}:latest
